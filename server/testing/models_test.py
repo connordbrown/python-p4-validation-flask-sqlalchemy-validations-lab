@@ -27,6 +27,9 @@ class TestAuthor:
         '''requires each record to have a unique name.'''
         
         with app.app_context():
+            db.session.query(Author).delete()
+            db.session.commit()
+
             author_a = Author(name = 'Ben', phone_number = '1231144321')
             db.session.add(author_a)
             db.session.commit()
@@ -41,8 +44,7 @@ class TestAuthor:
         '''requires each phone number to be exactly ten digits.'''
 
         with app.app_context():
-
-                
+ 
             with pytest.raises(ValueError):
                 LOGGER.info('testing short phone number')
                 author = Author(name="Jane Author", phone_number="3311")
